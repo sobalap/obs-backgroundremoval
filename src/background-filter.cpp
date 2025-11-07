@@ -128,8 +128,7 @@ obs_properties_t *background_filter_properties(void *data)
 
 	obs_property_t *advanced = obs_properties_add_bool(props, "advanced", obs_module_text("Advanced"));
 
-	obs_properties_add_bool(props, "keepalive",
-				obs_module_text("Keep Alive"));
+	obs_properties_add_bool(props, "keepalive", obs_module_text("Keep Alive"));
 
 	// If advanced is selected show the advanced settings, otherwise hide them
 	obs_property_set_modified_callback(advanced, enable_advanced_settings);
