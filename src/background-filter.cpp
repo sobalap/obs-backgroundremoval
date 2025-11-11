@@ -161,10 +161,13 @@ obs_properties_t *background_filter_properties(void *data)
 
 	obs_property_list_add_string(p_use_gpu, obs_module_text("CPU"), USEGPU_CPU);
 #ifdef HAVE_ONNXRUNTIME_CUDA_CP
-	obs_property_list_add_string(p_use_gpu, obs_module_text("GPUCuda"), USEGPU_CUDA);
+	obs_property_list_add_string(p_use_gpu, obs_module_text("GPUCUDA"), USEGPU_CUDA);
 #endif
 #ifdef HAVE_ONNXRUNTIME_ROCM_EP
-	obs_property_list_add_string(p_use_gpu, obs_module_text("GPURocm"), USEGPU_ROCM);
+	obs_property_list_add_string(p_use_gpu, obs_module_text("GPUROCM"), USEGPU_ROCM);
+#endif
+#ifdef HAVE_ONNXRUNTIME_TENSORRT_EP
+	obs_property_list_add_string(p_use_gpu, obs_module_text("TENSORRT"), USEGPU_TENSORRT);
 #endif
 #if defined(__APPLE__)
 	obs_property_list_add_string(p_use_gpu, obs_module_text("CoreML"), USEGPU_COREML);
@@ -270,7 +273,7 @@ void background_filter_update(void *data, obs_data_t *settings)
 
 	tf->contourFilter = (float)obs_data_get_double(settings, "contour_filter");
 	tf->smoothContour = (float)obs_data_get_double(settings, "smooth_contour");
-	tf->maskExpansion = (float)obs_data_get_double(settings, "mask_expansion");
+	tf->maskExpansion = (int)obs_data_get_double(settings, "mask_expansion");
 	tf->feather = (float)obs_data_get_double(settings, "feather");
 	tf->maskEveryXFrames = (int)obs_data_get_int(settings, "mask_every_x_frames");
 	tf->maskEveryXFramesCount = (int)(0);

@@ -65,6 +65,11 @@ int createOrtSession(filter_data *tf)
 			Ort::ThrowOnError(OrtSessionOptionsAppendExecutionProvider_ROCM(sessionOptions, 0));
 		}
 #endif
+#ifdef HAVE_ONNXRUNTIME_TENSORRT_EP
+		if (tf->useGPU == USEGPU_TENSORRT) {
+			Ort::ThrowOnError(OrtSessionOptionsAppendExecutionProvider_Tensorrt(sessionOptions, 0));
+		}
+#endif
 #if defined(__APPLE__)
 		if (tf->useGPU == USEGPU_COREML) {
 			uint32_t coreml_flags = 0;
